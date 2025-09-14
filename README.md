@@ -21,6 +21,17 @@ To get started with these scripts, you need to have Go installed on your machine
    cd go-playground
    \`\`\`
 
+## Running Tests
+
+To run the test cases located inside the `/tests` directory, first navigate into the `tests` folder, then run the tests with the following commands:
+
+```sh
+cd tests
+go test -v
+```
+
+This will execute all test files in the `/tests` directory. Make sure you have Go installed and your terminal is in the `tests` directory.
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or additions.
