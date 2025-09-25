@@ -54,6 +54,7 @@ func diningPerson(wg, seatedWg *sync.WaitGroup, forks *map[int]*sync.Mutex, p *P
 		time.Sleep(eatTimes)
 
 		fmt.Printf("%s is thinking.\n", p.name)
+		time.Sleep(thinkTimes)
 
 		(*forks)[p.leftFork].Unlock()
 		(*forks)[p.rightFork].Unlock()
