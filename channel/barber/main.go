@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -97,6 +98,8 @@ func (shop *BarberShop) addClient(clientName string) {
 }
 
 func main() {
+
+	rand.Seed(time.Now().UnixNano())
 	fmt.Printf("Barber shop is opening with %d seats in the waiting room\n", seatingCapacity)
 
 	clientChan := make(chan string, seatingCapacity)
@@ -110,4 +113,38 @@ func main() {
 		ClientsChan:     clientChan,
 		Open:            true,
 	}
+
+	fmt.Println("Barber shop is open for business")
+
+	shop.addBarber("Barber 1")
+	shop.addBarber("Barber 2")
+
+	shopClosing := make(chan bool)
+	closed := make(chan bool)
+
+	go func() {
+		<-time.After(timeOpen)
+		shopClosing <- true
+		shop.closeShopForDay()
+		closed <- true
+	}()
+
+	i := 1
+
+	go func() {
+		for {
+			ranndomMillseconds := rand.Int() % (2 * arriavalRate)
+
+			select {
+			case <-shopClosing:
+				return
+			case <-time.After(time.Duration(ranndomMillseconds) * time.Millisecond):
+				clientName := fmt.Sprintf("Client %d", i)
+				shop.addClient(clientName)
+				i++
+			}
+		}
+	}()
+
+	<-closed
 }
