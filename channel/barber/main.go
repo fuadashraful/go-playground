@@ -62,8 +62,6 @@ func (shop *BarberShop) cutHair(barberName, client string) {
 
 func (shop *BarberShop) sendBarberHome(barberName string) {
 	fmt.Printf("Barber %s is going home for the day\n", barberName)
-	close(shop.ClientsChan)
-	shop.Open = false
 	shop.BarbersDoneChan <- true
 }
 
