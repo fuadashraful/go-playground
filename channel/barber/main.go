@@ -127,7 +127,7 @@ func main() {
 		closed <- true
 	}()
 
-	i := 1
+	clientId := 1
 
 	go func() {
 		for {
@@ -137,9 +137,9 @@ func main() {
 			case <-shopClosing:
 				return
 			case <-time.After(time.Duration(ranndomMillseconds) * time.Millisecond):
-				clientName := fmt.Sprintf("Client %d", i)
+				clientName := fmt.Sprintf("Client %d", clientId)
 				shop.addClient(clientName)
-				i++
+				clientId++
 			}
 		}
 	}()
